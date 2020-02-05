@@ -1,0 +1,41 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+  pull_request:
+    branches:
+      - master
+    tags:
+      - v*
+  release:
+    types: [published,prereleased]
+
+
+jobs:
+
+  push:
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v1
+      - name: install miniconda
+        run: |
+          wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O ~/miniconda.sh
+          bash ~/miniconda.sh -b -p $HOME/miniconda
+          source $HOME/miniconda/bin/activate
+      - name: install packages for build index
+        run: |
+          conda install -y -c bioconda hisat2 samtools picard bwa
+      - name: run test
+        run: |
+          chmod +x ./create-database.sh
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION="JUST MODIFY"
+          ./create-database.sh
