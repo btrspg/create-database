@@ -63,7 +63,7 @@ if [ ! -f ${GRCH37_GTF_FILE} ] ; then
        ${HISAT2_EXON_SCRIPT} ${GRCH37_GTF_FILE} > genome.exon
 fi
 
-CMD="${HISAT2_BUILD_EXE} -p 4 ${GRCH37_FASTA} --snp genome.snp --haplotype genome.haplotype --ss genome.ss --exon genome.exon hisat2_index"
+CMD="${HISAT2_BUILD_EXE} -p 4 ${GRCH37_FASTA} --snp genome.snp --haplotype genome.haplotype --ss genome.ss --exon genome.exon hisat2_index/genome"
 echo Running $CMD
 
 if $CMD ; then

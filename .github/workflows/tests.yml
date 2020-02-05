@@ -14,32 +14,77 @@ on:
   release:
     types: [published,prereleased]
 
+env:
+  IMAGE_NAME: gdatabase
+  DOCKER_HUB_REP_NAME: btrspg
 
 jobs:
 
   test:
-    runs-on: [ubuntu-latest]
+    runs-on: [ubuntu-16.04]
     steps:
       - uses: actions/checkout@v1
       - name: update env
         run: |
-          sudo apt update
-          sudo apt install -y md5sum
+          sudo apt update --fix-missing
+          sudo apt install -y wget bzip2 ca-certificates libglib2.0-0 libxext6 libsm6 libxrender1 git mercurial subversion
+          sudo apt-get clean
       - name: install miniconda
         run: |
-          wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O ~/miniconda.sh
-          bash ~/miniconda.sh -b -p $HOME/miniconda
-          source $HOME/miniconda/bin/activate
+          export PATH=$PATH:/opt/conda/bin
+          echo $PATH
+          wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+          bash ~/miniconda.sh -b -p /opt/conda
+          sudo ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh
+          . /etc/profile.d/conda.sh
+          find /opt/conda/ -follow -type f -name '*.a' -delete
+          find /opt/conda/ -follow -type f -name '*.js.map' -delete
+          /opt/conda/bin/conda clean -afy
+          conda activate base
+
       - name: install packages for build index
         run: |
-          conda install -y -c bioconda hisat2 samtools picard bwa
+          conda env update  -f conda-env.yml -n base
+          conda info -e
+
+      - name: test commands
+        run: |
+          export PATH=$PATH:/opt/conda/bin:/usr/share/miniconda/bin
+
+#      - name: modify hisat2 files
+#        run: |
+#          sed -i 's/#!s\/usr\/bin\/env python/#!\/usr\/bin\/env python3/' /usr/share/miniconda/bin/*py
       - name: run test
         run: |
+          export PATH=$PATH:/opt/conda/bin:/usr/share/miniconda/bin
+          echo $PATH
+          python --version
           chmod +x ./create-database.sh
-          # Strip git ref prefix from version
+          ./create-database.sh
+          ls -lth -R
+
+
+  build:
+    needs: test
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v1
+      - name: build docker image
+        run: |
+          docker build . --file Dockerfile -t ${IMAGE_NAME}
+
+      - name: Log into registry
+        run: echo "${{ secrets.dockerhub_token }}" | docker login  -u ${{ secrets.dockerhub_user }} --password-stdin
+      - name: push image
+        run: |
+          IMAGE_ID=${DOCKER_HUB_REP_NAME}/${IMAGE_NAME}
+          # Strip git ref prefix from verseion
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION="JUST MODIFY"
-          ./create-database.sh
+          [ "$VERSION" == "master" ] && VERSION="latest"
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
+
+
