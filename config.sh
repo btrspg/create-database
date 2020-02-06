@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DATABASE_DIR=./database
+DATABASE_DIR=/tmp/database
 HUMAN_GRCH37_VERSION=75
 HUMAN_GRCH38_VERSION=99
 
