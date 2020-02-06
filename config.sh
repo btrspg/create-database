@@ -6,7 +6,10 @@ HUMAN_GRCH38_VERSION=99
 
 ENSEMBL_GRCh37_BASE=ftp://ftp.ensembl.org/pub/release-${HUMAN_GRCH37_VERSION}/fasta/homo_sapiens/dna
 ENSEMBL_GRCh37_GTF_BASE=ftp://ftp.ensembl.org/pub/release-${HUMAN_GRCH37_VERSION}/gtf/homo_sapiens
-
+UCSC_FTP=http://hgdownload.soe.ucsc.edu/goldenPath/
+FLAT_FILE=refFlat.txt
+FLAT_GRCH37=${UCSC_FTP}/hg19/database/${FLAT_FILE}.gz
+FLAT_GRCH38=${UCSC_FTP}/hg38/database/${FLAT_FILE}.gz
 ENSEMBL_GRCh38_BASE=ftp://ftp.ensembl.org/pub/release-${HUMAN_GRCH38_VERSION}/fasta/homo_sapiens/dna
 ENSEMBL_GRCh38_GTF_BASE=ftp://ftp.ensembl.org/pub/release-${HUMAN_GRCH38_VERSION}/gtf/homo_sapiens
 
