@@ -32,8 +32,8 @@ SAMTOOLS_EXE=samtools
 BWA_EXE=bwa
 
 GRCH37_FASTA=Homo_sapiens.GRCh37.${HUMAN_GRCH37_VERSION}.dna.primary_assembly.fa
-GRCH38_FASTA=Homo_sapiens.GRCh38.${HUMAN_GRCH38_VERSION}.dna.primary_assembly.fa
+GRCH38_FASTA=Homo_sapiens.GRCh38.dna.primary_assembly.fa
 
 GRCH37_DICT=Homo_sapiens.GRCh37.${HUMAN_GRCH37_VERSION}.dna.primary_assembly.dict
-GRCH38_DICT=Homo_sapiens.GRCh38.${HUMAN_GRCH38_VERSION}.dna.primary_assembly.dict
+GRCH38_DICT=Homo_sapiens.GRCh38.dna.primary_assembly.dict
 rRNA_INTERVAL_LIST=Homo_sapiens.rRNA.interval_list
