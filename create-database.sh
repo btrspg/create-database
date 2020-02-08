@@ -90,7 +90,7 @@ cp ${GRCH37_DICT} ${rRNA_INTERVAL_LIST}
 grep 'gene_biotype "rRNA"'  ${GRCH37_GTF_FILE} | awk '$3 == "transcript"' | cut -f1,4,5,7,9 | \
     perl -lane '
         /transcript_id "([^"]+)"/ or die "no transcript_id on $.";
-        print join "\t", (@F[0,1,2,3], $1)
+        print join "\t", (@F[0,1,2,3], $1) if $F[0]=~/^[XY0-9]/;
     ' | \
     sort -k1V -k2n -k3n >> ${rRNA_INTERVAL_LIST}
 
@@ -147,10 +147,10 @@ cp ${GRCH38_DICT} ${rRNA_INTERVAL_LIST}
 
 
 # Intervals for rRNA transcripts.
-grep 'gene_type "rRNA"'  ${GRCH38_GTF_FILE} | awk '$3 == "transcript"' | cut -f1,4,5,7,9 | \
+grep 'gene_biotype "rRNA"'  ${GRCH38_GTF_FILE} | awk '$3 == "transcript"' | cut -f1,4,5,7,9 | \
     perl -lane '
         /transcript_id "([^"]+)"/ or die "no transcript_id on $.";
-        print join "\t", (@F[0,1,2,3], $1)
+        print join "\t", (@F[0,1,2,3], $1) if $F[0]=~/^[XY0-9]/;
     ' | \
     sort -k1V -k2n -k3n >> ${rRNA_INTERVAL_LIST}
 
