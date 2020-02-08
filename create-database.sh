@@ -13,6 +13,10 @@
 # 8. samtools reference index
 # 9. to be continued.
 
+if [[ $1 == 'test' ]]; then
+    istest = 1
+fi
+
 set -e
 source $(dirname $0)/config.sh
 
@@ -92,6 +96,10 @@ grep 'gene_type "rRNA"'  ${GRCH37_GTF_FILE} | awk '$3 == "transcript"' | cut -f1
 
 ${BWA_EXE} index ${GRCH37_FASTA}
 ${SAMTOOLS_EXE} faidx ${GRCH37_FASTA}
+
+if [[ ${istest} == 1 ]]; then
+    rm -rf genome* hisat* Homo*
+fi
 
 cd ${DATABASE_DIR}/human/GRCH38
 

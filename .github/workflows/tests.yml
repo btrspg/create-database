@@ -62,7 +62,7 @@ jobs:
           echo $PATH
           python --version
           chmod +x ./create-database.sh
-          ./create-database.sh
+          ./create-database.sh test
           ls -lth -R
 
 
