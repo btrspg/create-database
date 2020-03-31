@@ -80,7 +80,7 @@ if $CMD ; then
 else
 	echo "Index building failed; see error message"
 fi
-
+mkdir -p star_index
 ${STAR_EXE} \
 --runThreadN 16 \
 --runMode genomeGenerate \
@@ -151,7 +151,7 @@ if $CMD ; then
 else
 	echo "Index building failed; see error message"
 fi
-
+mkdir -p star_index
 ${STAR_EXE} \
 --runThreadN 16 \
 --runMode genomeGenerate \
