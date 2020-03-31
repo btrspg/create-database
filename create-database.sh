@@ -39,10 +39,10 @@ get() {
 
 set -x
 
-mkdir -p ${DATABASE_DIR}/human/GRCH37  ${DATABASE_DIR}/human/GRCH38
+mkdir -p ${DATABASE_DIR}/human/GRCH37/  ${DATABASE_DIR}/human/GRCH38
 
 cd ${DATABASE_DIR}/human/GRCH37
-
+mkdir hisat2_index star_index
 echo "GRCH37"
 
 if [ ! -f ${GRCH37_FASTA} ] ; then
@@ -113,7 +113,7 @@ if [[ ${istest} == 1 ]]; then
 fi
 
 cd ${DATABASE_DIR}/human/GRCH38
-
+mkdir hisat2_index star_index
 echo "GRCH38"
 
 if [ ! -f ${GRCH38_FASTA} ] ; then
