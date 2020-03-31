@@ -30,6 +30,7 @@ HISAT2_EXON_SCRIPT=hisat2_extract_exons.py
 PICARD_EXE=picard
 SAMTOOLS_EXE=samtools
 BWA_EXE=bwa
+STAR_EXE=STAR
 
 GRCH37_FASTA=Homo_sapiens.GRCh37.${HUMAN_GRCH37_VERSION}.dna.primary_assembly.fa
 GRCH38_FASTA=Homo_sapiens.GRCh38.dna.primary_assembly.fa

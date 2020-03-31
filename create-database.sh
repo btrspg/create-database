@@ -81,6 +81,14 @@ else
 	echo "Index building failed; see error message"
 fi
 
+${STAR_EXE} \
+--runThreadN 16 \
+--runMode genomeGenerate \
+--genomeDir star_index \
+--sjdbGTFfile ${GRCH37_GTF_FILE} \
+--sjdbOverhang 1 \
+--genomeFastaFiles ${GRCH37_FASTA}
+
 
 ${PICARD_EXE} CreateSequenceDictionary R=${GRCH37_FASTA} O=${GRCH37_DICT}
 cp ${GRCH37_DICT} ${rRNA_INTERVAL_LIST}
@@ -89,8 +97,9 @@ cp ${GRCH37_DICT} ${rRNA_INTERVAL_LIST}
 # Intervals for rRNA transcripts.
 grep 'gene_biotype "rRNA"'  ${GRCH37_GTF_FILE} | awk '$3 == "transcript"' | cut -f1,4,5,7,9 | \
     perl -lane '
+        next if $F[0]=~/^[XY0-9]/;
         /transcript_id "([^"]+)"/ or die "no transcript_id on $.";
-        print join "\t", (@F[0,1,2,3], $1) if $F[0]=~/^[XY0-9]/;
+        print join "\t", (@F[0,1,2,3], $1) ;
     ' | \
     sort -k1V -k2n -k3n >> ${rRNA_INTERVAL_LIST}
 
@@ -141,6 +150,13 @@ else
 	echo "Index building failed; see error message"
 fi
 
+${STAR_EXE} \
+--runThreadN 16 \
+--runMode genomeGenerate \
+--genomeDir star_index \
+--sjdbGTFfile ${GRCH38_GTF_FILE} \
+--sjdbOverhang 1 \
+--genomeFastaFiles ${GRCH38_FASTA}
 
 ${PICARD_EXE} CreateSequenceDictionary R=${GRCH38_FASTA} O=${GRCH38_DICT}
 cp ${GRCH38_DICT} ${rRNA_INTERVAL_LIST}
@@ -149,8 +165,9 @@ cp ${GRCH38_DICT} ${rRNA_INTERVAL_LIST}
 # Intervals for rRNA transcripts.
 grep 'gene_biotype "rRNA"'  ${GRCH38_GTF_FILE} | awk '$3 == "transcript"' | cut -f1,4,5,7,9 | \
     perl -lane '
+        next if $F[0]=~/^[XY0-9]/;
         /transcript_id "([^"]+)"/ or die "no transcript_id on $.";
-        print join "\t", (@F[0,1,2,3], $1) if $F[0]=~/^[XY0-9]/;
+        print join "\t", (@F[0,1,2,3], $1) ;
     ' | \
     sort -k1V -k2n -k3n >> ${rRNA_INTERVAL_LIST}
 

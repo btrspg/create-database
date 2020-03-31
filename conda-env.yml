@@ -48,7 +48,7 @@ dependencies:
   - make=4.2.1=h1bed415_1
   - ncurses=6.1=he6710b0_1
   - openjdk=8.0.152=h46b5887_1
-  - openssl=1.1.1d=h7b6447c_3
+  - openssl=1.1.1e=h7b6447c_0
   - pango=1.42.4=h049681c_0
   - pcre=8.43=he6710b0_0
   - perl=5.26.2=h14c3975_0
@@ -61,6 +61,7 @@ dependencies:
   - samtools=1.9=h10a08f8_12
   - setuptools=41.4.0=py27_0
   - sqlite=3.31.1=h7b6447c_0
+  - star=2.7.3a=0
   - tk=8.6.8=hbc83047_0
   - tktable=2.10=h14c3975_0
   - wheel=0.33.6=py27_0
