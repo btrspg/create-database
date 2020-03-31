@@ -42,7 +42,7 @@ set -x
 mkdir -p ${DATABASE_DIR}/human/GRCH37/  ${DATABASE_DIR}/human/GRCH38
 
 cd ${DATABASE_DIR}/human/GRCH37
-mkdir hisat2_index star_index
+mkdir hisat2_index star_l1_index
 echo "GRCH37"
 
 if [ ! -f ${GRCH37_FASTA} ] ; then
@@ -84,7 +84,7 @@ mkdir -p star_index
 ${STAR_EXE} \
 --runThreadN 16 \
 --runMode genomeGenerate \
---genomeDir star_index \
+--genomeDir star_l1_index \
 --sjdbGTFfile ${GRCH37_GTF_FILE} \
 --sjdbOverhang 1 \
 --genomeFastaFiles ${GRCH37_FASTA}
@@ -113,7 +113,7 @@ if [[ ${istest} == 1 ]]; then
 fi
 
 cd ${DATABASE_DIR}/human/GRCH38
-mkdir hisat2_index star_index
+mkdir hisat2_index star_l1_index
 echo "GRCH38"
 
 if [ ! -f ${GRCH38_FASTA} ] ; then
@@ -155,7 +155,7 @@ mkdir -p star_index
 ${STAR_EXE} \
 --runThreadN 16 \
 --runMode genomeGenerate \
---genomeDir star_index \
+--genomeDir star_l1_index \
 --sjdbGTFfile ${GRCH38_GTF_FILE} \
 --sjdbOverhang 1 \
 --genomeFastaFiles ${GRCH38_FASTA}
