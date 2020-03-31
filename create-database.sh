@@ -99,7 +99,7 @@ grep 'gene_biotype "rRNA"'  ${GRCH37_GTF_FILE} | awk '$3 == "transcript"' | cut 
     perl -lane '
         next if $F[0]=~/^[XY0-9]/;
         /transcript_id "([^"]+)"/ or die "no transcript_id on $.";
-        print join "\t", (@F[0,1,2,3], $1) ;
+        print join "\t", (@F[0,1,2,3], $1);
     ' | \
     sort -k1V -k2n -k3n >> ${rRNA_INTERVAL_LIST}
 
