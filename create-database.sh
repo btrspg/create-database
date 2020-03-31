@@ -75,12 +75,8 @@ fi
 CMD="${HISAT2_BUILD_EXE} -p 4 ${GRCH37_FASTA} --snp genome.snp --haplotype genome.haplotype --ss genome.ss --exon genome.exon hisat2_index/genome"
 echo Running ${CMD}
 
-if $CMD ; then
-	echo "genome index built; you may remove fasta files"
-else
-	echo "Index building failed; see error message"
-fi
-mkdir -p star_index
+${CMD}
+
 ${STAR_EXE} \
 --runThreadN 16 \
 --runMode genomeGenerate \
@@ -146,12 +142,8 @@ fi
 CMD="${HISAT2_BUILD_EXE} -p 4 ${GRCH38_FASTA} --snp genome.snp --haplotype genome.haplotype --ss genome.ss --exon genome.exon hisat2_index/genome"
 echo Running ${CMD}
 
-if $CMD ; then
-	echo "genome index built; you may remove fasta files"
-else
-	echo "Index building failed; see error message"
-fi
-mkdir -p star_index
+${CMD}
+
 ${STAR_EXE} \
 --runThreadN 16 \
 --runMode genomeGenerate \
