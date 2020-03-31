@@ -42,7 +42,7 @@ set -x
 mkdir -p ${DATABASE_DIR}/human/GRCH37/  ${DATABASE_DIR}/human/GRCH38
 
 cd ${DATABASE_DIR}/human/GRCH37
-mkdir hisat2_index star_l1_index
+mkdir -p hisat2_index star_l1_index
 echo "GRCH37"
 
 if [ ! -f ${GRCH37_FASTA} ] ; then
@@ -109,7 +109,7 @@ if [[ ${istest} == 1 ]]; then
 fi
 
 cd ${DATABASE_DIR}/human/GRCH38
-mkdir hisat2_index star_l1_index
+mkdir -p hisat2_index star_l1_index
 echo "GRCH38"
 
 if [ ! -f ${GRCH38_FASTA} ] ; then
@@ -166,6 +166,7 @@ grep 'gene_biotype "rRNA"'  ${GRCH38_GTF_FILE} | awk '$3 == "transcript"' | cut 
     sort -k1V -k2n -k3n >> ${rRNA_INTERVAL_LIST}
 
 grep 'gene_biotype "miRNA"'  ${GRCH38_GTF_FILE} | awk '$3 == "transcript"' > mirna.gtf
+grep 'gene_biotype "lincRNA"'  ${GRCH38_GTF_FILE} | awk '$3 == "transcript"' > lincRNA.gtf
 
 ${BWA_EXE} index ${GRCH38_FASTA}
 ${SAMTOOLS_EXE} faidx ${GRCH38_FASTA}
