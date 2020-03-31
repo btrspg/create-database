@@ -103,6 +103,8 @@ grep 'gene_biotype "rRNA"'  ${GRCH37_GTF_FILE} | awk '$3 == "transcript"' | cut 
     ' | \
     sort -k1V -k2n -k3n >> ${rRNA_INTERVAL_LIST}
 
+grep 'gene_biotype "miRNA"'  ${GRCH37_GTF_FILE} | awk '$3 == "transcript"' > mirna.gtf
+
 ${BWA_EXE} index ${GRCH37_FASTA}
 ${SAMTOOLS_EXE} faidx ${GRCH37_FASTA}
 
@@ -170,6 +172,8 @@ grep 'gene_biotype "rRNA"'  ${GRCH38_GTF_FILE} | awk '$3 == "transcript"' | cut 
         print join "\t", (@F[0,1,2,3], $1) ;
     ' | \
     sort -k1V -k2n -k3n >> ${rRNA_INTERVAL_LIST}
+
+grep 'gene_biotype "miRNA"'  ${GRCH38_GTF_FILE} | awk '$3 == "transcript"' > mirna.gtf
 
 ${BWA_EXE} index ${GRCH38_FASTA}
 ${SAMTOOLS_EXE} faidx ${GRCH38_FASTA}
